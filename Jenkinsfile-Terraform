@@ -1,0 +1,57 @@
+pipeline {
+  agent {
+    kubernetes {
+      label 'terraform-deploy'  // all your pods will be named with this prefix, followed by a unique id
+      idleMinutes 5  // how long the pod will live after no jobs have run on it
+      yamlFile 'pods/terraform-pod.yml'  // path to the pod definition relative to the root of our project 
+    }
+  }
+  environment {
+    ACCESS_KEY_ID_CREDS = credentials('access_key_id')
+    SECRET_ACCESS_KEY_CREDS = credentials('secret_access_key')
+    AWS_ACCESS_KEY_ID= "$ACCESS_KEY_ID_CREDS_PSW"
+    AWS_SECRET_ACCESS_KEY= "$SECRET_ACCESS_KEY_CREDS_PSW"
+    AWS_DEFAULT_REGION="eu-central-1"
+  }
+  stages {
+    stage('Parameters') {
+        steps {
+            script { 
+                properties([
+                    parameters([
+                        choice(
+                            choices: ['apply', 'destroy'], 
+                            name: 'action'
+                        )
+                    ])
+                ])
+            }
+        }
+    }
+    stage('Create Instance to AWS') {
+      when {
+        expression { 
+          return params.action == 'apply'
+        }
+      }
+      steps {
+        container('terraform') {  
+          sh "cd terraform && terraform init && terraform apply -state=/home/terraform/main.tfstate -auto-approve"
+        }
+      }
+    }
+    stage('Destroy Instance in AWS') {
+      when {
+        expression { 
+          return params.action == 'destroy'
+        }
+      }
+      steps {
+        container('terraform') {  
+          sh "cd terraform && terraform init && terraform destroy -state=/home/terraform/main.tfstate -auto-approve"
+        }
+      }
+    }
+  }
+}
+    
