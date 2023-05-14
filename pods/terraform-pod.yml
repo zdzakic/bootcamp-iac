@@ -6,6 +6,9 @@ spec:
       image: docker.io/vmartinvega/bootcamp-terraform:latest
       command: ["tail", "-f", "/dev/null"]
       imagePullPolicy: IfNotPresent
+      env:
+        - name: TF_REGISTRY_CLIENT_TIMEOUT
+          value: 20
       volumeMounts:
         - name: terraform-volume
           mountPath: /home/terraform
