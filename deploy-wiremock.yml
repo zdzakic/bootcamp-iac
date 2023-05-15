@@ -13,10 +13,6 @@
       set_fact:
         token: "{{ lookup('env','K8S_CREDS_PSW') }}"
 
-    - name: Debug token
-      debug:
-        var: token
-
     - name: Read state
       set_fact:
         state: "{{lookup('ansible.builtin.file', 'state/state.json') | from_json }}"
