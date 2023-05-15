@@ -10,7 +10,7 @@ pipeline {
     stage('Build and Push Iac Bootcamp Images') {
       environment {
         DOCKER_CREDS = credentials('dockerio')  // A jenkins credentials (username/password) is expected in jenkins (craete it before running)
-        DOCKER_ACCOUNT = "vmartinvega"
+        DOCKER_ACCOUNT = "<DOCKER ACCOUNT>"
       }
       steps {
         container('docker') {  
