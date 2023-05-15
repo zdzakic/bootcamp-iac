@@ -10,7 +10,7 @@
         name: "{{ app_name }}"
         labels:
           app: "{{ app_name }}"
-        namespace: "{{ namespace }}"
+        namespace: "{{ namespace_k8s }}"
       spec:
         replicas: "{{ replicas }}"
         selector:
@@ -39,7 +39,7 @@
       kind: Service
       metadata:
         name: "{{ app_name }}"
-        namespace: "{{ namespace }}"
+        namespace: "{{ namespace_k8s }}"
       spec:
         type: NodePort
         selector:
