@@ -6,7 +6,7 @@
     app_name: wiremock
     app_image: docker.io/<DOCKER ACCOUNT>/bootcamp-wiremock:latest
     app_port: 32100
-    namespace: default
+    namespace_k8s: default
     replicas: 1
   tasks:
     - name: Set fact for token
