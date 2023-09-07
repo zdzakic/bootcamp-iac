@@ -7,7 +7,7 @@ pipeline {
     }
   }
   stages {
-    stage('Deploy Wiremock to 8ks') {
+    stage('Deploy Wiremock to k8s') {
       environment {
         K8S_CREDS = credentials('sa_k8s')  // A jenkins credentials (username/password) is expected in jenkins (craete it before running)
         K8S_AUTH_HOST="<K8S CLUSTER URL>"

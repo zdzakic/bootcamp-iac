@@ -3,9 +3,9 @@
 This repo contains all info needed to run the lab3
 
 ## Configure the VM with the right tools
-* Deploy **8ks**
+* Deploy **k8s**
 ```
-ansible-playbook -i 127.0.0.1, deploy-8ks.yml
+ansible-playbook -i 127.0.0.1, deploy-k8s.yml
 ```
 * Deploy **nfs** and csi implementation
 ```
